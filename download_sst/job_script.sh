@@ -51,7 +51,7 @@ log_message "Conda environment: $(conda info --envs | grep '*' || echo 'No activ
 log_message "Current directory: $(pwd)"
 
 # Check if main.py exists
-SCRIPT_PATH="$(dirname "$0")/main.py"
+SCRIPT_PATH="/mnt/beegfs/home/jpindell2022/projects/nasa-murep/nasa-murep-hpc/download_sst/main.py"
 if [ ! -f "$SCRIPT_PATH" ]; then
     log_message "ERROR: main.py not found at $SCRIPT_PATH"
     exit 1

@@ -59,8 +59,15 @@ log_message "Python version: $(python --version 2>&1)"
 log_message "Conda environment: $(conda info --envs | grep '*' || echo 'No active environment')"
 log_message "Current directory: $(pwd)"
 
+# Set the working directory to the script's directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$SCRIPT_DIR" || {
+    log_message "ERROR: Failed to change directory to script location: $SCRIPT_DIR"
+    exit 1
+}
+
 # Check if main.py exists
-SCRIPT_PATH="$(dirname "$0")/main.py"
+SCRIPT_PATH="/mnt/beegfs/home/jpindell2022/projects/nasa-murep/nasa-murep-hpc/download_modis/main.py"
 if [ ! -f "$SCRIPT_PATH" ]; then
     log_message "ERROR: main.py not found at $SCRIPT_PATH"
     exit 1
