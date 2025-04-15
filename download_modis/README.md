@@ -32,3 +32,8 @@ sbatch download_job.sh <csv_file_path>
 Replace `<csv_file_path>` with the path to `downloads.csv` (e.g., `downloads.csv`).
 
 
+also,
+
+```
+! python3 main.py downloads.csv --column_name "fileUrls from query MOD021KM--61 2024-06-01..2024-06-30 x-94y30.5 x-88y27.5[5]"
+```

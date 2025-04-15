@@ -19,7 +19,7 @@ conda activate nasa-murep
 ```bash
 conda create -n nasa-murep python=3.11 -y
 
-conda install -c conda-forge satpy pyresample matplotlib numpy xarray cartopy netCDF4 pandas cmocean matplotlib-scalebar glob2 -y
+conda install -c conda-forge satpy pyresample matplotlib numpy xarray cartopy netCDF4 pandas cmocean matplotlib-scalebar glob2 python-dotenv pyhdf -y
 pip install --upgrade "satpy[all]" -y
 
 conda activate nasa-murep
@@ -116,3 +116,6 @@ sed -i 's/\r//' job_script.sh
 ```
 
 ---
+
+[```
+https://oceancolor.gsfc.nasa.gov/resources/docs/tutorials/```](https://oceancolor.gsfc.nasa.gov/resources/docs/tutorials/)

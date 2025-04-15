@@ -22,7 +22,7 @@ import os
 # Paths
 INPUT_DIR_MODIS = "/mnt/beegfs/groups/ouri_project/satdata/modis/"
 INPUT_DIR_SST = "/mnt/beegfs/groups/ouri_project/satdata/sst/"
-OUTPUT_DIR = "figures"
+OUTPUT_DIR = "/mnt/beegfs/home/jpindell2022/projects/nasa-murep/nasa-murep-hpc/cdom/figures"
 
 # File patterns
 MODIS_FILE_PATTERN = "*.hdf"

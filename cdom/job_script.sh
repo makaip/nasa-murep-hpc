@@ -50,8 +50,8 @@ log_message "Python version: $(python --version 2>&1)"
 log_message "Conda environment: $(conda info --envs | grep '*' || echo 'No active environment')"
 log_message "Current directory: $(pwd)"
 
-# Check if main.py exists
-SCRIPT_PATH="$(dirname "$0")/main.py"
+# Use absolute path for main.py
+SCRIPT_PATH="/mnt/beegfs/home/jpindell2022/projects/nasa-murep/nasa-murep-hpc/cdom/main.py"
 if [ ! -f "$SCRIPT_PATH" ]; then
     log_message "ERROR: main.py not found at $SCRIPT_PATH"
     exit 1

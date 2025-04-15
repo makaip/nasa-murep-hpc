@@ -7,8 +7,9 @@
 #SBATCH --partition=shortq7
 #SBATCH --output=download_job_%j.log
 
-# Create a separate log file for detailed debugging
-LOG_FILE="download_debug_${SLURM_JOB_ID}.log"
+# Create a single log file in the script's directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+LOG_FILE="$SCRIPT_DIR/download_debug.log"
 TIMESTAMP_FORMAT="%Y-%m-%d %H:%M:%S"
 
 # Function to log messages with timestamp
@@ -21,13 +22,8 @@ log_message "Starting NASA data download job"
 log_message "Job ID: $SLURM_JOB_ID"
 log_message "Running on node: $(hostname)"
 
-# Check if CSV file was provided
-if [ "$#" -lt 1 ]; then
-    log_message "ERROR: CSV file path not provided. Usage: sbatch download_job.sh <csv_file_path>"
-    exit 1
-fi
-
-CSV_FILE="$1"
+# Use the full path for the CSV file
+CSV_FILE="/mnt/beegfs/home/jpindell2022/projects/nasa-murep/nasa-murep-hpc/download_modis/downloads.csv"
 log_message "Using CSV file: $CSV_FILE"
 
 # Load Anaconda module
@@ -60,7 +56,6 @@ log_message "Conda environment: $(conda info --envs | grep '*' || echo 'No activ
 log_message "Current directory: $(pwd)"
 
 # Set the working directory to the script's directory
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR" || {
     log_message "ERROR: Failed to change directory to script location: $SCRIPT_DIR"
     exit 1

@@ -30,11 +30,17 @@ def download_file(url, destination_folder, token):
     except requests.exceptions.RequestException as e:
         print(f"Failed to download {file_name}. Error: {e}")
 
-def download_files_from_csv(csv_file_path, destination_folder, token):
+def download_files_from_csv(csv_file_path, destination_folder, token, column_name):
     with open(csv_file_path, mode='r') as csvfile:
-        for row in csv.DictReader(csvfile):
-            full_url = f"https://ladsweb.modaps.eosdis.nasa.gov{row['fileUrls for custom selected']}"
-            download_file(full_url, destination_folder, token)
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            try:
+                # Ensure proper URL concatenation
+                file_path = row[column_name].lstrip('/')
+                full_url = f"https://ladsweb.modaps.eosdis.nasa.gov/{file_path}"
+                download_file(full_url, destination_folder, token)
+            except KeyError as e:
+                print(f"Missing expected column in CSV: {e}. Available columns: {reader.fieldnames}")
 
 def parse_arguments(): 
     parser = argparse.ArgumentParser(description="Download files from URLs specified in a CSV file.")
@@ -42,9 +48,11 @@ def parse_arguments():
     parser.add_argument("--download_folder", default=DEFAULT_DOWNLOAD_FOLDER, 
                         help=f"Path to the folder where files will be downloaded. Default: {DEFAULT_DOWNLOAD_FOLDER}")
     parser.add_argument("--token", default=DEFAULT_TOKEN, help="Bearer token for authentication (optional, defaults to token in script).")
+    parser.add_argument("--column_name", default="fileUrls for custom selected", 
+                        help="Name of the column in the CSV file containing the file URLs. Default: 'fileUrls for custom selected'")
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse_arguments()
     print(f"Files will be downloaded to: {args.download_folder}")
-    download_files_from_csv(args.csv_file, args.download_folder, args.token)
+    download_files_from_csv(args.csv_file, args.download_folder, args.token, args.column_name)
